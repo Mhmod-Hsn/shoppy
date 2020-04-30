@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 
 Vue.use(VueRouter)
 
@@ -19,6 +20,13 @@ const router = new VueRouter({
       path: '/dashboard',
       name: 'Dashboard',
       component: () => import('../views/Dashboard.vue'),
+      children: [
+        {
+          path: 'categories',
+          name: 'DashboardCategory',
+          component: () => import('../components/dashboard/category/Category')
+        }
+      ],
       meta: {
         requiresAuth: true
       }
