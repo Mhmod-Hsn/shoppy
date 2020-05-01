@@ -4,15 +4,10 @@
 		class="productCard"
 		elevation="10"
 	>
-		<v-img
-			:src="$store.state.dummyImage"
-			v-if="!product.image"
-			height="200px"
-		></v-img>
+
 		<v-img
 			:src="product.image"
 			height="200px"
-			v-else
 		></v-img>
 
 
@@ -38,6 +33,7 @@
 			<v-spacer></v-spacer>
 			<v-btn
 				color="warning"
+				@click="editProduct(product)"
 			>
 				<i aria-hidden="true" class="fa fa-pencil-square-o mr-2"></i>
 				edit
@@ -60,6 +56,9 @@
         if (confirm) {
           this.$store.dispatch('removeProduct', product)
         }
+      },
+      editProduct(product) {
+        this.$emit('editProduct', product)
       }
     }
   }

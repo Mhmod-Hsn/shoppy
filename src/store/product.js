@@ -8,7 +8,7 @@ export default {
     addProduct({commit}, product) {
 
       // Upload images
-      let productRef = storage.ref('products/' + product.image.name);
+      let productRef = storage.ref('products/' + Date.now());
       let uploadTask = productRef.put(product.image);
       uploadTask.on('state_changed', snapshot => {
         },
@@ -58,8 +58,48 @@ export default {
         }).catch(e => {
         console.log('error' + e)
       })
+    },
 
-    }
+    editProduct({commit}, product) {
+      console.log(product);
+      // user changed the image
+      if (product.image) {
+        // Upload images
+        let productRef = storage.ref('products/' + Date.now());
+        let uploadTask = productRef.put(product.image);
+        uploadTask.on('state_changed', snapshot => {
+          },
+          e => {
+            console.log('error' + e)
+          }, () => {
+            uploadTask.snapshot.ref.getDownloadURL()
+              .then(downloadURL => {
+                product.image = downloadURL
+              })
+              .then(() => {
+
+                // Upload to firebase
+                db.collection('product').doc(product.id).update(product)
+                  .then(() => {
+                    commit('EDIT_PRODUCT', product)
+                  }).catch(e => {
+                  console.log('error' + e)
+                })
+
+
+              })
+          })
+      } else {
+        // user doesn't changed the image
+        // Upload to firebase
+        db.collection('product').doc(product.id).update(product)
+          .then(() => {
+            commit('EDIT_PRODUCT', product)
+          }).catch(e => {
+          console.log('error' + e)
+        })
+      }
+    },
   },
   mutations: {
 
@@ -75,7 +115,23 @@ export default {
       state.products = state.products.filter(product => {
         return product.id !== products.id
       })
+    },
 
+    EDIT_PRODUCT(state, product) {
+      for (let i = 0; i < state.products.length; i++) {
+        if (state.products[i].id === product.id) {
+          state.products[i].name = product.name;
+
+          // user doesn't changed the image
+          product.image ? state.products[i].image = product.image : state.products[i].image = state.products[i].image;
+
+          state.products[i].price = product.price;
+          state.products[i].quantity = product.quantity;
+          state.products[i].slug = product.slug;
+          state.products[i].id = product.id;
+          break
+        }
+      }
     }
   },
   getters: {},
