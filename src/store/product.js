@@ -5,10 +5,11 @@ export default {
     products: []
   },
   actions: {
-    addProduct({commit}, productPayload) {
+    addProduct({commit}, product) {
 
-      let productRef = storage.ref('products/' + productPayload.image.name)
-      let uploadTask = productRef.put(productPayload.image)
+      // Upload images
+      let productRef = storage.ref('products/' + product.image.name);
+      let uploadTask = productRef.put(product.image);
       uploadTask.on('state_changed', snapshot => {
         },
         e => {
@@ -16,34 +17,30 @@ export default {
         }, () => {
           uploadTask.snapshot.ref.getDownloadURL()
             .then(downloadURL => {
-              productPayload.image = downloadURL
+              product.image = downloadURL
             })
             .then(() => {
-
               // Upload to firebase
-              db.collection('product').add(productPayload)
+              db.collection('product').add(product)
                 .then(() => {
-                  commit('ADD_PRODUCT', productPayload)
+                  commit('ADD_PRODUCT', product)
                 }).catch(e => {
                 console.log('error' + e)
               })
             })
-
-
         })
 
 
     },
 
-
     getProducts({commit}) {
-      let products = []
+      let products = [];
       // fetch data from firestore
       db.collection('product').get()
         .then(snapshot => {
           snapshot.forEach(doc => {
-            let p = doc.data()
-            p.id = doc.id
+            let p = doc.data();
+            p.id = doc.id;
             products.push(p)
           })
         }).then(() => {
@@ -53,18 +50,33 @@ export default {
       })
 
     },
+
+    removeProduct({commit}, product) {
+      db.collection('product').doc(product.id).delete()
+        .then(() => {
+          commit('REMOVE_PRODUCT', product)
+        }).catch(e => {
+        console.log('error' + e)
+      })
+
+    }
   },
   mutations: {
 
     ADD_PRODUCT(state, product) {
-      console.log('mutation', product)
       state.products.push(product)
     },
-
 
     SET_PRODUCTS(state, products) {
       state.products = products
     },
+
+    REMOVE_PRODUCT(state, products) {
+      state.products = state.products.filter(product => {
+        return product.id !== products.id
+      })
+
+    }
   },
   getters: {},
 }

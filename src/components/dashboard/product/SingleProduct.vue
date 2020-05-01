@@ -5,12 +5,12 @@
 		elevation="10"
 	>
 		<v-img
-			:src="product.image"
-			v-if="product.image"
+			:src="$store.state.dummyImage"
+			v-if="!product.image"
 			height="200px"
 		></v-img>
 		<v-img
-			:src="$store.state.dummyImage"
+			:src="product.image"
 			height="200px"
 			v-else
 		></v-img>
@@ -30,6 +30,7 @@
 			<v-btn
 				color="error"
 				text
+				@click="deleteProduct(product)"
 			>
 				<i aria-hidden="true" class="fa fa-trash-o mr-2"></i>
 				delete
@@ -53,13 +54,13 @@
     name: "SingleProduct",
     props: ['product'],
     methods: {
-      // deleteProduct(product) {
-      //   let confirm =
-      //     window.confirm(`Are you sure to delete category ${product.name} ?`)
-      //   if (confirm) {
-      //     this.$store.dispatch('removeCategory', product)
-      //   }
-      // }
+      deleteProduct(product) {
+        let confirm =
+          window.confirm(`Are you sure to delete category ${product.name} ?`);
+        if (confirm) {
+          this.$store.dispatch('removeProduct', product)
+        }
+      }
     }
   }
 </script>

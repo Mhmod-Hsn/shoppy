@@ -48,10 +48,11 @@
 
 					<v-col sm="4">
 						<v-file-input
-							counter
-							label="Product image"
+							:rules="rules"
+							id="fileinput"
 							show-size
 							v-model="product.image"
+							label="Product images"
 						></v-file-input>
 					</v-col>
 
@@ -84,12 +85,17 @@
     name: "AddProduct",
     data() {
       return {
+        rules: [
+          value => !value || value.size < 1000000 ||
+            'image size should be less than 1 MB!',
+        ],
         product: {
           slug: '',
           category: '',
-          name: 'product name test',
-          quantity: 100,
-          price: 100
+          name: '',
+          quantity: 0,
+          price: 0,
+          image: null
         },
         categories: []
       }
@@ -99,8 +105,8 @@
         db.collection('category').get()
           .then(snapshot => {
             snapshot.forEach(doc => {
-              let c = doc.data()
-              c.id = doc.id
+              let c = doc.data();
+              c.id = doc.id;
               this.categories.push(c)
             })
           }).catch(e => {
@@ -108,17 +114,15 @@
         })
       },
 
-
       addNewProduct() {
         if (this.product.name) {
           let slug = slugify(this.product.name, {
             replacement: '-',
             remove: /[$*_+~.()'"!\-:@]/g,
             lower: true
-          })
-          this.product.slug = slug
-
-          this.$store.dispatch('addProduct', this.product)
+          });
+          this.product.slug = slug;
+          this.$store.dispatch('addProduct', this.product);
           this.product = {}
         }
       }
