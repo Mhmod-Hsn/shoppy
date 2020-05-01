@@ -31,10 +31,25 @@ export const addCategory = ({commit}, {category}) => {
 }
 
 export const removeCategory = ({commit}, category) => {
-  console.log(category)
-  db.collection('category').doc(category.id).delete().then(() => {
+  db.collection('category').doc(category.id).delete()
+    .then(() => {
     commit('REMOVE_CATEGORY', category)
-  }).catch(e => {
+    }).catch(e => {
+    console.log('error' + e)
+  })
+}
+
+export const editCategory = ({commit}, category) => {
+  console.log(category)
+
+  db.collection('category').doc(category.id).update({
+    name: category.name,
+    slug: category.slug
+  })
+    .then(() => {
+      commit('EDIT_CATEGORY', category)
+
+    }).catch(e => {
     console.log('error' + e)
   })
 }
