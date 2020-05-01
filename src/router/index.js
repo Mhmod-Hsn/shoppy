@@ -25,6 +25,11 @@ const router = new VueRouter({
           path: 'categories',
           name: 'DashboardCategory',
           component: () => import('../components/dashboard/category/Category')
+        },
+        {
+          path: 'products',
+          name: 'DashboardProducts',
+          component: () => import('../components/dashboard/product/Product')
         }
       ],
       meta: {

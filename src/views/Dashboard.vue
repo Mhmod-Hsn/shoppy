@@ -114,7 +114,7 @@
           size="38px"
         >
           <span class="headline">
-            M
+            {{this.$store.getters.currentUser}}
           </span>
         </v-avatar>
       </v-btn>
@@ -123,14 +123,16 @@
 
     <v-content>
       <v-container class="dashboard-content" fluid>
-        <router-view/>
+	      <transition mode="out-in" name="slide-fade">
+		      <router-view/>
+	      </transition>
       </v-container>
     </v-content>
   </v-app>
 </template>
 
 <script>
-  import firebase from 'firebase'
+  import {fb} from '@/firebase/init'
 
 
   export default {
@@ -138,6 +140,11 @@
       drawer: true,
       items: [
         {icon: 'mdi mdi-home', text: 'Home', component: 'Dashboard'},
+        {
+          icon: 'fa fa-th',
+          text: 'Products',
+          component: 'DashboardProducts'
+        },
         {
           icon: 'fa fa-dropbox',
           text: 'Categories',
@@ -154,13 +161,14 @@
         },
       ],
     }),
+    methods: {},
     computed: {
       title() {
         return this.$store.state.title
       }
     },
     mounted() {
-      let user = firebase.auth().currentUser
+      let user = fb.auth().currentUser
 
       if (!user) {
         this.$router.push({name: 'Login'})
@@ -168,7 +176,9 @@
 
 
       //  Dark mode
-      this.$vuetify.theme.dark = true
+      this.$vuetify.theme.dark = this.$store.state.darkMode
+
+
 
     }
   }

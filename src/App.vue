@@ -14,7 +14,7 @@
       title() {
         return this.$store.state.title
       }
-    }
+    },
   }
 </script>
 
