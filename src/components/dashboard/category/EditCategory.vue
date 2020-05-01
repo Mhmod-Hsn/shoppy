@@ -19,16 +19,15 @@
 
 				<v-btn
 					@click="closeDialog"
-					color="green darken-1"
+					color="dark darken-1"
 					text
 				>
 					Cancel
 				</v-btn>
 
 				<v-btn
-					@click="editCategory(editingCategory)"
-					color="green darken-1"
-					text
+					@click="editCat(editingCategory)"
+					color="primary darken-1"
 				>
 					Edit
 				</v-btn>
@@ -49,7 +48,7 @@
       }
     },
     methods: {
-      editCategory(category) {
+      editCat(category) {
         if (this.categoryName) {
           let slug = slugify(this.categoryName, {
             replacement: '-',

@@ -7,7 +7,7 @@
 			<h3>{{category.name}}</h3>
 
 			<v-btn
-				@click="deleteCategory(category)"
+				@click.stop="deleteCategory(category)"
 				class="removeCategory"
 				color="error"
 				fab

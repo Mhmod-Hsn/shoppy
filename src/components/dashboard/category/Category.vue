@@ -1,13 +1,13 @@
 <template>
 	<div id="cateegories">
-		<h1>category</h1>
+		<!--		<h1 class="mb-3">category</h1>-->
 		<AddCategory/>
 
 		<v-row v-if="categories">
 			<v-col
 				:key="category.id"
 				lg="3"
-				@click="editCategoryForm(category)" md="4" sm="6"
+				@click.stop="editCategoryForm(category)" md="4" sm="6"
 				v-for="category in categories">
 				<SingleCategory
 					:category="category">
@@ -40,7 +40,6 @@
     },
     methods: {
       editCategoryForm(cat) {
-        console.log(cat)
         this.editingCategory = cat
         this.showEditDialog = true
       }
@@ -52,7 +51,7 @@
     },
     computed: {
       categories() {
-        return this.$store.state.categories
+        return this.$store.state.category.categories
       }
     },
     mounted() {
