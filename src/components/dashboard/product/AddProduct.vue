@@ -49,11 +49,9 @@
 					<v-col sm="4">
 						<v-file-input
 							counter
-							label="Product images"
-							multiple
+							label="Product image"
 							show-size
-							small-chips
-							v-model="product.images"
+							v-model="product.image"
 						></v-file-input>
 					</v-col>
 
@@ -87,6 +85,8 @@
     data() {
       return {
         product: {
+          slug: '',
+          category: '',
           name: 'product name test',
           quantity: 100,
           price: 100
@@ -118,7 +118,6 @@
           })
           this.product.slug = slug
 
-          console.log(this.product)
           this.$store.dispatch('addProduct', this.product)
           this.product = {}
         }

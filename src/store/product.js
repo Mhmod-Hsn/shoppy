@@ -5,42 +5,34 @@ export default {
     products: []
   },
   actions: {
-    addProduct({commit}, p) {
+    addProduct({commit}, productPayload) {
 
-      let imgs = []
-      // Upload images
-      for (let i = 0; i < p.images.length; i++) {
-        let file = p.images[i]
-        let productRef = storage.ref(`products/${file.name}`)
-        let uploadTask = productRef.put(file)
-        uploadTask.on('state_changed', snapshot => {
-          },
-          e => {
-            console.log('error' + e)
-          }, () => {
-            uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
-              console.log(downloadURL.toString())
-              imgs.push(downloadURL.toString())
+      let productRef = storage.ref('products/' + productPayload.image.name)
+      let uploadTask = productRef.put(productPayload.image)
+      uploadTask.on('state_changed', snapshot => {
+        },
+        e => {
+          console.log('error' + e)
+        }, () => {
+          uploadTask.snapshot.ref.getDownloadURL()
+            .then(downloadURL => {
+              productPayload.image = downloadURL
             })
-          })
-      }
+            .then(() => {
 
-      let product = {
-        name: p.name,
-        category: p.category,
-        quantity: parseInt(p.quantity),
-        slug: p.slug,
-        images: imgs
-      }
+              // Upload to firebase
+              db.collection('product').add(productPayload)
+                .then(() => {
+                  commit('ADD_PRODUCT', productPayload)
+                }).catch(e => {
+                console.log('error' + e)
+              })
+            })
 
-      console.log(product)
 
-      db.collection('product').add(product)
-        .then(() => {
-          commit('ADD_PRODUCT', product)
-        }).catch(e => {
-        console.log('error' + e)
-      })
+        })
+
+
     },
 
 

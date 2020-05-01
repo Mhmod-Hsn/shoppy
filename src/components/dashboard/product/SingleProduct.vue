@@ -5,8 +5,14 @@
 		elevation="10"
 	>
 		<v-img
-			:src="product.images[0]"
+			:src="product.image"
+			v-if="product.image"
 			height="200px"
+		></v-img>
+		<v-img
+			:src="$store.state.dummyImage"
+			height="200px"
+			v-else
 		></v-img>
 
 
