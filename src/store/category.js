@@ -77,7 +77,6 @@ export default {
       // state.categories.splice(index, 1)
     },
     EDIT_CATEGORY(state, category) {
-      let index = null;
       for (let i = 0; i < state.categories.length; i++) {
         if (state.categories[i].id === category.id) {
           state.categories[i].name = category.name;

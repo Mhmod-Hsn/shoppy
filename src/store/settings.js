@@ -2,89 +2,39 @@ import db from '@/firebase/init'
 
 export default {
   state: {
-    categories: []
+    settings: {
+      darkTheme: true,
+      shopName: '',
+      currency: '',
+    }
   },
   actions: {
-    addCategory({commit}, {category}) {
-      db.collection('category').add({
-        name: category.name,
-        slug: category.slug
-      }).then(() => {
-        commit('ADD_CATEGORY', category)
-      }).catch(e => {
-        console.log('error' + e)
-      })
-    },
-    getCategories({commit}) {
-      let cats = [];
+    getSettings({commit}) {
       // fetch data from firestore
-      db.collection('category').get()
+      db.collection('settings').doc('1').get()
         .then(snapshot => {
-          snapshot.forEach(doc => {
-            let c = doc.data();
-            c.id = doc.id;
-            cats.push(c)
-          })
-        }).then(() => {
-        commit('SET_CATEGORIES', cats)
+          commit('SET_SETTINGS', snapshot.data())
       }).catch(e => {
         console.log('error' + e)
       })
-
     },
-    editCategory({commit}, category) {
-      db.collection('category').doc(category.id).update({
-        name: category.name,
-        slug: category.slug
-      })
-        .then(() => {
-          commit('EDIT_CATEGORY', category)
-
-        }).catch(e => {
-        console.log('error' + e)
-      })
-    },
-    removeCategory({commit}, category) {
-      db.collection('category').doc(category.id).delete()
-        .then(() => {
-          commit('REMOVE_CATEGORY', category)
+    updateSettings({commit}, settings) {
+      db.collection('settings').doc('1').update(settings)
+        .then(snapshot => {
+          window.alert('Settings saved successfully');
+          commit('UPDATE_SETTINGS', settings)
         }).catch(e => {
         console.log('error' + e)
       })
     }
   },
   mutations: {
-    SET_CATEGORIES(state, categories) {
-      state.categories = categories
+    SET_SETTINGS(state, settings) {
+      state.settings = settings
     },
 
-    ADD_CATEGORY(state, category) {
-      state.categories.push(category)
-    },
-
-    REMOVE_CATEGORY(state, category) {
-      state.categories = state.categories.filter(cat => {
-        return cat.id !== category.id
-      })
-
-      // let index = null
-      // for (let i = 0; i < state.categories.length; i++) {
-      //   if (state.categories[i].id === category.id) {
-      //     index = i;
-      //     break
-      //   }
-      // }
-      // state.categories.splice(index, 1)
-    },
-    EDIT_CATEGORY(state, category) {
-      let index = null;
-      for (let i = 0; i < state.categories.length; i++) {
-        if (state.categories[i].id === category.id) {
-          state.categories[i].name = category.name;
-          state.categories[i].slug = category.slug;
-          break
-        }
-      }
+    UPDATE_SETTINGS(state, settings) {
+      state.settings = settings
     }
   },
   getters: {},

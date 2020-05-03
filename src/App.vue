@@ -12,7 +12,7 @@
     data: () => ({}),
     computed: {
       title() {
-        return this.$store.state.title
+        return this.$store.state.settings.title
       }
     },
   }

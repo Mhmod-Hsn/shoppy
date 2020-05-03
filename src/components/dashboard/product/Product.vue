@@ -16,7 +16,6 @@
 				</SingleProduct>
 			</v-col>
 		</v-row>
-
 		<EditProduct
 			:categories="categories"
 			:product="editingProduct"
@@ -39,7 +38,9 @@
     data() {
       return {
         showEditDialog: false,
-        editingProduct: null
+        editingProduct: null,
+        currentPage: 1,
+        itemsPerPage: 4
       }
     },
     components: {
@@ -62,8 +63,7 @@
       }
     },
     mounted() {
-      this.$store.dispatch('getCategories');
-      this.$store.dispatch('getProducts')
+
     }
   }
 </script>

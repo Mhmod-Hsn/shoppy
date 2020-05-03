@@ -87,7 +87,7 @@
         class="ml-0 pl-4"
         style="width: 300px"
       >
-        <span class="hidden-sm-and-down">{{title}}</span>
+        <span class="hidden-sm-and-down">{{$store.state.settings.settings.shopName}}</span>
       </v-toolbar-title>
       <v-text-field
         class="hidden-sm-and-down"
@@ -101,9 +101,7 @@
       <v-btn icon>
         <v-icon>mdi-apps</v-icon>
       </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-bell</v-icon>
-      </v-btn>
+      <Notifications></Notifications>
       <v-btn
         icon
         large
@@ -133,13 +131,21 @@
 
 <script>
   import {fb} from '@/firebase/init'
-
+  import Notifications
+    from './../components/dashboard/notofications/Notifications'
 
   export default {
+    components: {
+      Notifications,
+    },
     data: () => ({
       drawer: true,
       items: [
-        {icon: 'mdi mdi-home', text: 'Home', component: 'Dashboard'},
+        {
+          icon: 'mdi mdi-home',
+          text: 'Overview',
+          component: 'Dashboard'
+        },
         {
           icon: 'fa fa-th',
           text: 'Products',
@@ -151,35 +157,41 @@
           component: 'DashboardCategory'
         },
         {
-          icon: 'mdi-chevron-up',
-          'icon-alt': 'mdi-chevron-down',
-          text: 'More',
-          model: false,
-          children: [
-            {text: 'Import', component: 'Category'},
-          ],
+          icon: 'fa fa-shopping-cart',
+          text: 'Orders',
+          component: 'DashboardOrders'
+        },
+        {
+          icon: 'fa fa-gear',
+          text: 'Settings',
+          component: 'DashboardSettings'
         },
       ],
     }),
     methods: {},
     computed: {
-      title() {
-        return this.$store.state.title
+      darkTheme() {
+        return this.$store.state.settings.settings.darkTheme
       }
     },
     mounted() {
-      let user = fb.auth().currentUser
+      this.$store.dispatch('getCategories');
+      this.$store.dispatch('getSettings');
+      this.$store.dispatch('getProducts');
+      this.$store.dispatch("getOrders");
+
+
+      this.$vuetify.theme.dark = this.$store.state.settings.settings.darkTheme;
+      let user = fb.auth().currentUser;
 
       if (!user) {
         this.$router.push({name: 'Login'})
       }
-
-
-      //  Dark mode
-      this.$vuetify.theme.dark = this.$store.state.darkMode
-
-
-
+    },
+    watch: {
+      darkTheme(newValue, oldValue) {
+        this.$vuetify.theme.dark = newValue
+      },
     }
   }
 </script>

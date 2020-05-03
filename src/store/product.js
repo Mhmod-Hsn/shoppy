@@ -22,7 +22,8 @@ export default {
             .then(() => {
               // Upload to firebase
               db.collection('product').add(product)
-                .then(() => {
+                .then(docRef => {
+                  product.id = docRef.id;
                   commit('ADD_PRODUCT', product)
                 }).catch(e => {
                 console.log('error' + e)

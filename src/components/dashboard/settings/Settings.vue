@@ -47,7 +47,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("getSettings");
+
   }
 };
 </script>

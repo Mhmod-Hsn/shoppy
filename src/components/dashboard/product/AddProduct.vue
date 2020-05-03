@@ -6,6 +6,7 @@
 				<v-row>
 
 
+
 					<!--			name			-->
 					<v-col sm="4">
 						<v-text-field
@@ -97,23 +98,9 @@
           price: 0,
           image: null
         },
-        categories: []
       }
     },
     methods: {
-      getCategories() {
-        db.collection('category').get()
-          .then(snapshot => {
-            snapshot.forEach(doc => {
-              let c = doc.data();
-              c.id = doc.id;
-              this.categories.push(c)
-            })
-          }).catch(e => {
-          console.log('error' + e)
-        })
-      },
-
       addNewProduct() {
         if (this.product.name) {
           let slug = slugify(this.product.name, {
@@ -127,9 +114,12 @@
         }
       }
     },
-    computed: {},
+    computed: {
+      categories() {
+        return this.$store.state.category.categories
+      }
+    },
     mounted() {
-      this.getCategories()
     }
   }
 </script>

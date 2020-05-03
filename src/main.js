@@ -6,14 +6,15 @@ import vuetify from './plugins/vuetify';
 import firebase from 'firebase/app'
 
 
+
 Vue.filter('priceText', value => {
-  return value || value > 0 ? value + ' ' + store.state.currency : 'Free'
-})
+  return value || value > 0 ? value + ' ' + store.state.settings.settings.currency : 'Free'
+});
 
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
-let app = null
+let app = null;
 
 // waith for firebase before starting the app
 firebase.auth().onAuthStateChanged(() => {
@@ -25,4 +26,4 @@ firebase.auth().onAuthStateChanged(() => {
       render: h => h(App)
     }).$mount('#app')
   }
-})
+});
