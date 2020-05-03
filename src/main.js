@@ -4,13 +4,15 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
 import firebase from 'firebase/app'
-
+import moment from 'moment'
 
 
 Vue.filter('priceText', value => {
   return value || value > 0 ? value + ' ' + store.state.settings.settings.currency : 'Free'
 });
-
+Vue.filter('fromTheMoment', value => {
+  return moment(Number(value)).startOf('hour').fromNow()
+});
 
 Vue.config.productionTip = false;
 

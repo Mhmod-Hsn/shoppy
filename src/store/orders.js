@@ -29,10 +29,18 @@ export default {
       })
     },
 
-    addOrder({commit}, order) {
+    addOrder({dispatch, commit}, order) {
       db.collection('order').add(order)
         .then(() => {
           commit('ADD_ORDER', order);
+
+          dispatch('addNotification', {
+            product: order.product,
+            quantity: order.quantity,
+            read: false,
+            timestamp: Date.now()
+          });
+
           window.alert('Order Added Successfully')
         }).catch(e => {
         console.log('error' + e)

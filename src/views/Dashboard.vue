@@ -101,7 +101,7 @@
       <v-btn icon>
         <v-icon>mdi-apps</v-icon>
       </v-btn>
-      <Notifications></Notifications>
+      <Notifications class="mx-5"></Notifications>
       <v-btn
         icon
         large
@@ -179,6 +179,8 @@
       this.$store.dispatch('getSettings');
       this.$store.dispatch('getProducts');
       this.$store.dispatch("getOrders");
+      this.$store.dispatch("getNotifications");
+
 
 
       this.$vuetify.theme.dark = this.$store.state.settings.settings.darkTheme;

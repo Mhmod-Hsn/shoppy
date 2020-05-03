@@ -103,7 +103,6 @@ export default {
     },
   },
   mutations: {
-
     ADD_PRODUCT(state, product) {
       state.products.push(product)
     },
@@ -124,7 +123,9 @@ export default {
           state.products[i].name = product.name;
 
           // user doesn't changed the image
-          product.image ? state.products[i].image = product.image : state.products[i].image = state.products[i].image;
+          product.image ?
+            state.products[i].image = product.image :
+            state.products[i].image = state.products[i].image;
 
           state.products[i].price = product.price;
           state.products[i].quantity = product.quantity;
@@ -135,5 +136,13 @@ export default {
       }
     }
   },
-  getters: {},
+  getters: {
+    getProductFromId: (state) => (id) => {
+      for (let product of state.products) {
+        if (product.id === id) {
+          return product.name
+        }
+      }
+    }
+  },
 }

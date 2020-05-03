@@ -7,6 +7,7 @@ import product from './product'
 import settings from './settings'
 import orders from './orders'
 import rules from './rules'
+import notifications from './notifications'
 
 
 Vue.use(Vuex);
@@ -17,7 +18,8 @@ export default new Vuex.Store({
     product,
     orders,
     settings,
-    rules
+    rules,
+    notifications
   },
   state: {
     dummyImage: 'https://lh3.googleusercontent.com/proxy/3inDg_SqHs5630hZEiUZk6X7rawX1va1KSen6i8VZQlpDq3zJF3mrrgkuDuAqrvfKiZ8_dKoGArSwVfoqtgcwWPKQ8645nDnYtDobNkXlHiWFBwqrwvUauGH7jQ0nrA_E0Aa2noF',
