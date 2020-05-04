@@ -17,9 +17,14 @@ const router = new VueRouter({
     },
     {
       path: "/dashboard",
-      name: "Dashboard",
+      name: 'Dashboard',
       component: () => import("../views/Dashboard.vue"),
       children: [
+        {
+          path: "overview",
+          name: "DashboardOverview",
+          component: () => import("../components/dashboard/overview/Overview"),
+        },
         {
           path: "categories",
           name: "DashboardCategory",

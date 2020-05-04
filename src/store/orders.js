@@ -113,5 +113,16 @@ export default {
       }
     }
   },
-  getters: {},
+  getters: {
+    ordersWeekly(state) {
+      let count = 0;
+      let aWeekAgo = Date.now() - (86400000);
+      state.orders.forEach(order => {
+        if (order.timestamp > aWeekAgo) {
+          count++
+        }
+      });
+      return count
+    }
+  },
 }

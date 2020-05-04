@@ -16,7 +16,7 @@
 						<v-text-field
 							:rules="rules.name"
 							label="Client name"
-							v-model="order.user"
+							v-model="editedOrder.user"
 						></v-text-field>
 					</v-col>
 
@@ -26,7 +26,7 @@
 							:rules="rules.email"
 							label="Email"
 							type="email"
-							v-model="order.email"
+							v-model="editedOrder.email"
 						></v-text-field>
 					</v-col>
 
@@ -35,7 +35,7 @@
 						<v-text-field
 							:rules="rules.phone"
 							label="Phone"
-							v-model="order.phone"
+							v-model="editedOrder.phone"
 						></v-text-field>
 					</v-col>
 
@@ -44,7 +44,7 @@
 						<v-text-field
 							:rules="rules.required"
 							label="Address"
-							v-model="order.address"
+							v-model="editedOrder.address"
 						></v-text-field>
 					</v-col>
 
@@ -55,7 +55,7 @@
 							label="Quantity"
 							min="0"
 							type="number"
-							v-model="order.quantity"
+							v-model="editedOrder.quantity"
 						></v-text-field>
 					</v-col>
 
@@ -67,7 +67,7 @@
 							item-text="name"
 							item-value="id"
 							label="Product"
-							v-model="order.product"
+							v-model="editedOrder.product"
 						></v-autocomplete>
 					</v-col>
 
@@ -78,7 +78,7 @@
 							:rules="rules.required"
 							background-color="transparent"
 							label="Order State"
-							v-model="order.state"
+							v-model="editedOrder.state"
 						></v-select>
 					</v-col>
 
@@ -89,7 +89,7 @@
 							height="80"
 							label="Comments"
 							no-resize
-							v-model="order.comments"
+							v-model="editedOrder.comments"
 						></v-textarea>
 					</v-col>
 				</v-row>
@@ -97,7 +97,7 @@
 				<v-card-actions>
 					<v-spacer></v-spacer>
 					<v-btn
-						@click="showEditDialog = false"
+						@click="closeDialog"
 						color="dark darken-1"
 						text
 					>
@@ -123,6 +123,17 @@
     data() {
       return {
         valid: false,
+        editedOrder: {
+          id: this.order.id,
+          user: this.order.user,
+          email: this.order.email,
+          phone: this.order.phone,
+          address: this.order.address,
+          quantity: this.order.quantity,
+          product: this.order.product,
+          state: this.order.state,
+          comments: this.order.comments,
+        }
       }
     },
     props: ['order', 'showEditDialog'],
@@ -138,23 +149,17 @@
       },
     },
     methods: {
+      closeDialog() {
+        this.$emit('closeDialog')
+      },
+
       editOrder() {
         if (this.valid) {
-          this.order.timestamp = Date.now();
-          this.$store.dispatch('editOrder', this.order);
+          console.log(this.editedOrder);
+          this.$store.dispatch('editOrder', this.editedOrder);
 
-          this.order = {
-            user: '',
-            email: '',
-            phone: '',
-            address: '',
-            quantity: '',
-            product: '',
-            state: '',
-            comments: ''
-          };
           this.$refs.editOrderForm.resetValidation();
-          this.showEditDialog = false
+          this.closeDialog()
         }
       },
 

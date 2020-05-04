@@ -8,7 +8,7 @@ export default {
     lastVisible: {},
     first: db.collection('notifications')
       .orderBy('timestamp', "desc")
-      .limit(2)
+      .limit(5)
   },
 
   actions: {

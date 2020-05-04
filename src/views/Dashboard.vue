@@ -144,7 +144,7 @@
         {
           icon: 'mdi mdi-home',
           text: 'Overview',
-          component: 'Dashboard'
+          component: 'DashboardOverview'
         },
         {
           icon: 'fa fa-th',
@@ -175,10 +175,10 @@
       }
     },
     mounted() {
+      this.$store.dispatch("getOrders");
       this.$store.dispatch('getCategories');
       this.$store.dispatch('getSettings');
       this.$store.dispatch('getProducts');
-      this.$store.dispatch("getOrders");
       this.$store.dispatch("getNotifications");
 
 
