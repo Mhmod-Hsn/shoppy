@@ -1,0 +1,71 @@
+//  Fade animation
+.fade-enter-active, .fade-leave-active
+  transition: opacity .5s
+
+.fade-enter, .fade-leave-to
+  opacity: 0
+
+
+//  Slide fade animation
+.slide-fade-enter-active ,
+.slide-fade-leave-active
+  transition: all .3s ease
+
+.slide-fade-enter, .slide-fade-leave-to
+  transform: translateX(10px)
+  opacity: 0
+
+
+
+// Navbar
+.v-navigation-drawer
+  .v-list-item__action
+    margin-top: 5px
+    margin-bottom: 5px
+  i.mdi,
+  i.fa
+    font-size: 20px
+
+.dashboard-content
+  height: 100%
+
+.categoryCard
+  padding-right: 25px
+  cursor: pointer
+  .removeCategory
+    position: absolute
+    right: 10px
+    top: 50%
+    transform: translateY(-50%)
+    width: 30px!important
+    height: 30px!important
+    font-size: 20px!important
+    
+    
+.v-overlay
+  position: absolute!important
+.v-expansion-panel
+  position: relative!important
+
+
+
+.topTitledCard
+  margin-top: 50px
+
+  .card-content
+    padding-top: 20px
+
+  .v-card__title
+    position: absolute
+    top: -30px
+    left: 50%
+    transform: translateX(-50%)
+    width: 85%
+    box-shadow: 0 0 5px rgba(0,0,0,0.3)
+    border-radius: 5px
+    font-weight: bold
+
+  .todosTable
+    background-color: transparent!important
+    tr:hover
+      background-color: transparent!important

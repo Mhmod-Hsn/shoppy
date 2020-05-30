@@ -155,7 +155,6 @@
 
       editOrder() {
         if (this.valid) {
-          console.log(this.editedOrder);
           this.$store.dispatch('editOrder', this.editedOrder);
 
           this.$refs.editOrderForm.resetValidation();

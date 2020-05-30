@@ -23,6 +23,9 @@ export default {
     phone: [
       v => !!v || 'Field is required',
       v => phoneRegEx.test(v) || 'phone number must be 11 number',
+    ],
+    briefText: [
+      v => v.length >= 4 || 'Field must be less than 4 characters',
     ]
   }
 }

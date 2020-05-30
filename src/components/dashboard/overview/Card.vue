@@ -5,16 +5,16 @@
 		:sm="content.width[2]"
 		cols="12"
 	>
-		<div :color="content.color" class="card">
+		<div class="card">
 			<v-card
 				:color="content.color"
-				class="text-center"
+				class="topTitledCard text-center"
 				elevation="10"
 				raised>
 
 				<v-progress-circular
 					:value="Number(content.value[0])/Number(content.value[1])*100"
-					class="my-4"
+					class="my-4 mt-10"
 					color="dark"
 					rotate="270"
 					size="200"
@@ -25,14 +25,14 @@
 				</v-progress-circular>
 
 				<div
-					class="number font-weight-bold"
+					class="number font-weight-bold card-content"
 					v-else
 				>
 					{{content.value}}
 				</div>
 
 
-				<v-card-title class="d-block pt-1">
+				<v-card-title class="d-block pa-2 white secondary--text">
 					{{content.title}}
 				</v-card-title>
 			</v-card>

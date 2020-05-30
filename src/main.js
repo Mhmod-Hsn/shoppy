@@ -5,6 +5,10 @@ import store from './store'
 import vuetify from './plugins/vuetify';
 import firebase from 'firebase/app'
 import moment from 'moment'
+import PerfectScrollbar from "vue2-perfect-scrollbar";
+import "vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css";
+
+Vue.use(PerfectScrollbar);
 
 
 Vue.filter('priceText', value => {

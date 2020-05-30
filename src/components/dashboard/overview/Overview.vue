@@ -9,8 +9,12 @@
 				v-if="cardsData"
 			></Card>
 
-			<Todo :width="[4,6,12]"></Todo>
+			<Todo :todoPreferences="todoPreferences"></Todo>
 		</v-row>
+
+
+
+
 	</div>
 </template>
 
@@ -25,7 +29,12 @@
       Todo
     },
     data() {
-      return {}
+      return {
+        todoPreferences:{
+          width:[4,6,12],
+          color:'primary'
+        }
+      }
     },
     computed: {
       cardsData() {
@@ -63,7 +72,7 @@
             width: [3, 6, 6]
           },
           {
-            title: 'Since Last Week',
+            title: 'Orders Since Last Week',
             subTitle: '',
             color: 'teal',
             value: [
@@ -82,5 +91,7 @@
 </script>
 
 <style scoped>
+
+
 
 </style>

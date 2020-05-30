@@ -55,7 +55,6 @@
       }
     },
     mounted() {
-      this.$store.dispatch('getCategories')
     }
   }
 </script>
