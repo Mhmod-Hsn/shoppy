@@ -1,5 +1,5 @@
 
-> [DEMO for the application](https://shoppy-market.web.app/)
+> [DEMO for the application](https://shoppy-market.web.app/dashboard/)
 
 # shoppy
 ![](screenshot.jpg)
