@@ -1,5 +1,5 @@
 # shoppy
-
+![](screenshot.jpg)
 ## Project setup
 ```
 npm install
