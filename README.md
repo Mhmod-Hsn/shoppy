@@ -1,3 +1,6 @@
+
+> [DEMO for the application](https://shoppy-market.web.app/)
+
 # shoppy
 ![](screenshot.jpg)
 ## Project setup
